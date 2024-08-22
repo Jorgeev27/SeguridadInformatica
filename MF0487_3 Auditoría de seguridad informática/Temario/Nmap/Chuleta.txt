@@ -1,0 +1,101 @@
+DESCUBRIMIENTO DE SISTEMAS
+nmap 10.0.2.1
+nmap 10.0.2.0/24
+nmap 10.0.2.5-30
+nmap 10.0.2.1,11,12,19,20,22
+nmap 10.0.2.11 8.8.8.8
+nmap -iL fichero_direcciones.txt
+nmap 10.0.2.0/24 --exclude 10.0.2.11
+nmap scanme.nmap.org
+
+sondeo simple
+nmap scanme.nmap.org
+nmap scanme.nmap.org -PE -PS443 -PP -PA
+
+sondeo en red local
+nmap 10.0.2.26
+nmap 10.0.2.26 -PR (es lo mismo)
+Por defecto utiliza el protocolo ARP
+
+sondeo de lista
+nmap 10.0.2.10-30 -sL
+no envia ningún paquete (resuelve por DNS) es el menos agresivo. No es muy buena
+nmap 10.0.2.10-30 -sn   (no realiza sondeo de puertos)
+nmap 10.0.2.10-30 -PS (intenta conectar con el puerto 80 con el flag SYN, espera recibir ACK y anula la conexión con RST)
+nmap 10.0.2.10-30 -PA
+nmap 10.0.2.10-30 -PU (con protocolo UDP)
+nmap 10.0.2.10-30 -PE (tipo Ping)
+nmap 10.0.2.10-30 -PR (protocolo ARP)
+nmap 10.0.2.10-30 -PN (Omite el descubrimiento. solo realiza sondeo de puertos)
+
+SONDEO DE PUERTOS ABIERTOS
+los puertos están para NMAP:
+Abierto
+Cerrado
+Filtrado
+No filtrado
+Abierto|Filtrado
+Cerrado|Filtrado
+
+nmap 10.0.2.10-30 -sS (TCP SYN. Es el valor por defecto. No realiza la conexión (la resetea (RST) es mas sigloso)
+nmap 10.0.2.10-30 -sT (TCP connect Realiza la conexión y desconecta)
+nmap 10.0.2.10-30 -sA (TCP ACK. Para determinar si hay puertos filtrados)
+nmap 10.0.2.10-30 -sU (UDP)
+nmap 10.0.2.10-30 -sN (TCP Null-Pn. )
+nmap 10.0.2.10-30 -sF (FIN )
+nmap 10.0.2.10-30 -sX (XMas)
+Especificacion ed puertos
+ Por defecto:
+   1000 puertos más comunes y sondeo aleatorio
+-p
+   nmap 10.0.2.26 -p21 (Un solo puerto, varios con comas)
+   nmap 10.0.2.26 -p21-100 (Rango de puertos)
+   nmap 10.0.2.26 -p U:53,T:21-25,80 (Múltiples puertos UDP y TCP)
+   nmap 10.0.2.26 -p http, https (Nombres de servicio)
+   nmap 10.0.2.26 -p- (todos los puertos)
+-F
+      nmap 10.0.2.26 -F (Sondeo rápido (100 puertos)
+--top-ports (los x puertos más comunes)
+   nmap 10.0.2.26 --top-ports 1000
+--exclude-ports (excluir puertos)
+   nmap 10.0.2.26 -p 80-100 -exclude-ports 85
+
+DETECCIÓN DE SERVICIOS Y VERSIONES
+nmap 10.0.2.26 -sV -p 20-100 (detección del servicio y version)
+nmap 10.0.2.26 -sV -p 20-100 --version-intensity 8 (Intensidad X, por defecto 7. Va de 0 a 9)
+nmap 10.0.2.26 -A -p 20-100  (Opciones adicionales y agresivas. Es como poner -O, -sV -sC y --traceroute)
+
+
+DETECCIÓN DE SISTEMA OPERATIVO
+nmap 10.0.2.10-30 -sO 
+nmap 10.0.2.10-30 -sO --osscan-limit (solo si se detecta puerto TCP abierto y otro cerrado)
+nmap 10.0.2.10-30 -sO --osscan-guess (detección más agresiva)
+nmap 10.0.2.10-30 -sO --max-os-tries x (x intentos)
+
+
+USO DE SCRPTS CON NMAP
+nmap 10.0.2.10-30 -sC (Utiliza los scripts NSE predeterminados)
+
+
+ls /usr/share/nmap/scripts
+
+CONTROL DE TIEMPO
+Por defecto es -T3
+
+(0) paranoico
+(1) sigiloso
+(2) amable
+(3) normal
+(4) agresivo
+(5) loco
+
+FORMATOS DE SALIDA
+tipos de archivo
+-oN file  (salida normal)
+-oX file (salida XML)
+
+salida ampliada
+-v (incrementa el nivel de detalle)
+
+salida con paquetes
+--packet-trace (traza paquetes y datos enviados y recibidos)
