@@ -1,0 +1,15 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 15px;
+}
+
+#result, #error {
+    word-break: break-all;
+}
+
+#copyButton {
+    width: 100%;
+}
